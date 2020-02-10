@@ -12,16 +12,16 @@ const { check, validationResult } = require('express-validator');
 router.post("/register", [
     check('teacher').not().isEmpty(),
     check('teacher').isEmail(),
+
+    check('students').not().isEmpty(),
     check('students').isArray(),
+    check('students.*').isEmail(),
 ], async (req, res) => {
 
     const errors = validationResult(req)
 
     if (errors.isEmpty()) {
         try {
-
-            // console.log("getRegister called" + JSON.stringify(req.body.teacher));
-            // console.log("getRegister called" + JSON.stringify(req.body.students));
 
             //make sure student record exist in student table
             for (var i = 0; i < req.body.students.length; i++) {
