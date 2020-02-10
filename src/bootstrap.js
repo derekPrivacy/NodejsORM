@@ -37,7 +37,12 @@ module.exports = async () => {
         }, {
             StudentEmail: "student2@gmail.com",
             SuspensionFlag: 0
-        }],
+        },
+        {
+            StudentEmail: "student3@gmail.com",
+            SuspensionFlag: 0
+        }
+        ],
     ).catch(errHandler);
 
 };
