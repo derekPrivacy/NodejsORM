@@ -17,7 +17,7 @@
 
 7. manually create a new database named `nodejsSequelize` use GUI interface inside http://localhost/phpmyadmin/
 
-8. the database ORM is sequelize
+8. the database ORM is Sequelize
 
     8.1 to setup database table needed for the quiz , do `sequelize db:migrate`
 
