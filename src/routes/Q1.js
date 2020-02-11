@@ -30,8 +30,6 @@ router.post("/register", [
                 var oneStudent = await Student.findOne({ where: { StudentEmail: req.body.students[i] }, raw: true }).catch(function (err) {
                 });
 
-                console.log("my one student", oneStudent)
-
                 if (oneStudent == null) {
                     let student = await Student.create({
                         StudentEmail: req.body.students[i],
@@ -44,13 +42,7 @@ router.post("/register", [
 
                     requestStudents.push(req.body.students[i])
 
-                } else
-                //(oneStudent != null && oneStudent.SuspensionFlag == 1)
-                {
-                    // do nothing
                 }
-
-                console.log("heeh", requestStudents)
             }
 
 

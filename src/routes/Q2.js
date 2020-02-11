@@ -45,7 +45,6 @@ router.get("/commonstudents",
                         console.log(err)
                     });
 
-                    //prepare selectedStudents array
                     let selectedStudents = [];
                     for (let j = 0; j < oneTeacher_Register.length; j++) {
                         selectedStudents.push(oneTeacher_Register[j].StudentEmail);

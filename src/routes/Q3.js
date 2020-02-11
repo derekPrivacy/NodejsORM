@@ -9,12 +9,8 @@ const Register = require('../model/Register')
 
 const { check, validationResult } = require('express-validator');
 
-router.post("/register", [
-    // check('teacher').not().isEmpty(),
-    // check('teacher').isEmail(),
-
+router.post("/suspend", [
     check('student').not().isEmpty(),
-    // check('student').isArray(),
     check('student').isEmail(),
 ], async (req, res) => {
 
@@ -24,9 +20,19 @@ router.post("/register", [
         try {
 
             //take that student record out from register table 
+            console.log(req.body.student)
 
+            let rows = await Register.destroy({
+                where: {
+                    StudentEmail: req.body.student
+                }
+            })
 
             //add a suspension flag 1 to the student table
+            let update = await Student.update(
+                { SuspensionFlag: 1 },
+                { where: { StudentEmail: req.body.student } }
+            )
 
             //done
             res.status(204).send({ message: "suspended" })
