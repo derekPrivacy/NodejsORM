@@ -45,6 +45,8 @@ router.post("/register", [
                 }
             }
 
+            console.log("let mee see", requestStudents)
+
 
             //make sure teacher record exist in teacher table
             var oneTeacher = await Teacher.findOne({ where: { TeacherEmail: req.body.teacher } }).catch(function (err) {
@@ -66,18 +68,18 @@ router.post("/register", [
                 for (var i = 0; i < requestStudents.length; i++) {
                     let newRegister = await Register.create({
                         TeacherEmail: req.body.teacher,
-                        StudentEmail: req.body.students[i]
+                        StudentEmail: requestStudents[i]
                     });
                 }
             } else {
                 for (var i = 0; i < requestStudents.length; i++) {
                     let newRegister = await Register.findOrCreate({
                         where: {
-                            StudentEmail: req.body.students[i]
+                            StudentEmail: requestStudents[i]
                         },
                         defaults: {
                             TeacherEmail: req.body.teacher,
-                            StudentEmail: req.body.students[i]
+                            StudentEmail: requestStudents[i]
                         }
                     })
                 }
