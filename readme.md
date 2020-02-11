@@ -7,7 +7,6 @@
 3.  `yarn start` \
     do it at the same directory , then should see the console message:
     Server running at http://127.0.0.1:3001/
-    mysql conntected....
 
 4. Download and install Xampp
 
