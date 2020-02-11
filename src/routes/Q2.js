@@ -51,6 +51,7 @@ router.get("/commonstudents",
                         selectedStudents.push(oneTeacher_Register[j].StudentEmail);
                     }
 
+                    //the logic to update common students result array
                     if (i == 0) {
                         commonStudents = selectedStudents;
                     } else {
@@ -58,6 +59,7 @@ router.get("/commonstudents",
                             return selectedStudents.indexOf(val) != -1;
                         });
                     }
+
                 }
 
                 //done

@@ -23,18 +23,36 @@ router.post("/register", [
     if (errors.isEmpty()) {
         try {
 
-            //make sure student record exist in student table
+            //make sure student record exist in student table And his suspension flag !=1(suspended student shouldn't get registered)
+            var requestStudents = [];
+
             for (var i = 0; i < req.body.students.length; i++) {
-                var oneStudent = await Student.findOne({ where: { StudentEmail: req.body.students[i] } }).catch(function (err) {
+                var oneStudent = await Student.findOne({ where: { StudentEmail: req.body.students[i] }, raw: true }).catch(function (err) {
                 });
+
+                console.log("my one student", oneStudent)
 
                 if (oneStudent == null) {
                     let student = await Student.create({
                         StudentEmail: req.body.students[i],
                         SuspensionFlag: 0
                     });
+
+                    requestStudents.push(req.body.students[i])
+
+                } else if (oneStudent.SuspensionFlag != 1) {
+
+                    requestStudents.push(req.body.students[i])
+
+                } else
+                //(oneStudent != null && oneStudent.SuspensionFlag == 1)
+                {
+                    // do nothing
                 }
+
+                console.log("heeh", requestStudents)
             }
+
 
             //make sure teacher record exist in teacher table
             var oneTeacher = await Teacher.findOne({ where: { TeacherEmail: req.body.teacher } }).catch(function (err) {
@@ -53,14 +71,14 @@ router.post("/register", [
             });
 
             if (oneTeacher_Register == null) {
-                for (var i = 0; i < req.body.students.length; i++) {
+                for (var i = 0; i < requestStudents.length; i++) {
                     let newRegister = await Register.create({
                         TeacherEmail: req.body.teacher,
                         StudentEmail: req.body.students[i]
                     });
                 }
             } else {
-                for (var i = 0; i < req.body.students.length; i++) {
+                for (var i = 0; i < requestStudents.length; i++) {
                     let newRegister = await Register.findOrCreate({
                         where: {
                             StudentEmail: req.body.students[i]
