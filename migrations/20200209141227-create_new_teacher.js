@@ -16,6 +16,9 @@ module.exports = {
         allowNull: false,
         unique: true
       }
+    }, {
+      freezeTableName: true,
+      timestamps: false,
     }
     );
   },

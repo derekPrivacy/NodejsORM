@@ -18,6 +18,9 @@ module.exports = {
         type: Sequelize.STRING(),
         allowNull: false,
       }
+    }, {
+      freezeTableName: true,
+      timestamps: false,
     }
     );
   },

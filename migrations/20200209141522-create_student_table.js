@@ -16,10 +16,13 @@ module.exports = {
         unique: true
       },
       SuspensionFlag: {
-        type: Sequelize.STRING(),
+        type: Sequelize.INTEGER(),
         allowNull: false,
-        unique: true
+        unique: false
       }
+    }, {
+      freezeTableName: true,
+      timestamps: false,
     }
     );
   },
