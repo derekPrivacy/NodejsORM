@@ -10,9 +10,9 @@ const Register = require('../model/Register')
 const { check, validationResult } = require('express-validator');
 
 router.post("/retrievefornotifications", [
-    check('teacher').exists(),
+    check('teacher').not().isEmpty(),
     check('teacher').isEmail(),
-    check('notification').exists(),
+    check('notification').not().isEmpty(),
     check('notification').isLength({ min: 1 })
 ], async (req, res) => {
 
@@ -38,7 +38,7 @@ router.post("/retrievefornotifications", [
 
             var notifiedStudents = [];
 
-            for (var i = 0; i < notificationEmail.length; i++) {
+            for (var i = 0; notificationEmail != null && i < notificationEmail.length; i++) {
 
                 var oneStudent = await Student.findOne({ where: { StudentEmail: notificationEmail[i] }, raw: true }).catch(function (err) {
                 });
