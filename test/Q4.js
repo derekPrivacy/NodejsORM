@@ -16,7 +16,6 @@ describe('Send a notification and showing the list of recipients', () => {
                 "notification": "Hello Students! @testStudent1@gmail.com@testStudent2@gmail.com"
             })
             .then(function (res) {
-                console.log("hehe" + JSON.stringify(res.body))
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('recipients');

@@ -41,13 +41,13 @@ router.get("/commonstudents",
 
                 for (var i = 0; i < teachers.length; i++) {
 
-                    let oneTeacher_Register = await Register.findAll({ where: { TeacherEmail: teachers[i] }, raw: true, attributes: ['StudentEmail'] }).catch(function (err) {
+                    let oneTeacher_Register = await Register.findAll({ where: { Teacher_Email: teachers[i] }, raw: true, attributes: ['Student_Email'] }).catch(function (err) {
                         console.log(err)
                     });
 
                     let selectedStudents = [];
                     for (let j = 0; j < oneTeacher_Register.length; j++) {
-                        selectedStudents.push(oneTeacher_Register[j].StudentEmail);
+                        selectedStudents.push(oneTeacher_Register[j].Student_Email);
                     }
 
                     //the logic to update common students result array

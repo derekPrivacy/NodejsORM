@@ -27,63 +27,78 @@ router.post("/register", [
             var requestStudents = [];
 
             for (var i = 0; i < req.body.students.length; i++) {
-                var oneStudent = await Student.findOne({ where: { StudentEmail: req.body.students[i] }, raw: true }).catch(function (err) {
+                var oneStudent = await Student.findOne({ where: { Student_Email: req.body.students[i] }, raw: true }).catch(function (err) {
                 });
 
                 if (oneStudent == null) {
                     let student = await Student.create({
-                        StudentEmail: req.body.students[i],
-                        SuspensionFlag: 0
+                        Student_Email: req.body.students[i],
+                        Suspension_Flag: 0
                     });
 
                     requestStudents.push(req.body.students[i])
 
-                } else if (oneStudent.SuspensionFlag != 1) {
+                } else if (oneStudent.Suspension_Flag != 1) {
 
                     requestStudents.push(req.body.students[i])
 
+                } else {
+                    return res.status(422).json({ errors: `student ${req.body.students[i]} has been suspended` })
                 }
             }
 
-            console.log("let mee see", requestStudents)
-
 
             //make sure teacher record exist in teacher table
-            var oneTeacher = await Teacher.findOne({ where: { TeacherEmail: req.body.teacher } }).catch(function (err) {
+            var oneTeacher = await Teacher.findOne({ where: { Teacher_Email: req.body.teacher } }).catch(function (err) {
                 console.log(err)
             });
 
             if (oneTeacher == null) {
                 let teacher = await Teacher.create({
-                    TeacherEmail: req.body.teacher,
+                    Teacher_Email: req.body.teacher,
                 });
             }
 
-            //add teacher and student record into register table
-            var oneTeacher_Register = await Register.findOne({ where: { TeacherEmail: req.body.teacher } }).catch(function (err) {
-                console.log(err)
-            });
+            //add teacher and student record into register table If they are not already exist
 
-            if (oneTeacher_Register == null) {
-                for (var i = 0; i < requestStudents.length; i++) {
-                    let newRegister = await Register.create({
-                        TeacherEmail: req.body.teacher,
-                        StudentEmail: requestStudents[i]
-                    });
-                }
-            } else {
-                for (var i = 0; i < requestStudents.length; i++) {
-                    let newRegister = await Register.findOrCreate({
-                        where: {
-                            StudentEmail: requestStudents[i]
-                        },
-                        defaults: {
-                            TeacherEmail: req.body.teacher,
-                            StudentEmail: requestStudents[i]
-                        }
-                    })
-                }
+            for (var i = 0; i < requestStudents.length; i++) {
+                let newRegister = await Register.findOrCreate({
+                    where: {
+                        Teacher_Email: req.body.teacher,
+                        Student_Email: requestStudents[i]
+                    },
+                    defaults: {
+                        Teacher_Email: req.body.teacher,
+                        Student_Email: requestStudents[i]
+                    }
+                })
             }
+
+            // var oneTeacher_Register = await Register.findOne({ where: { Teacher_Email: req.body.teacher } }).catch(function (err) {
+            //     console.log(err)
+            // });
+
+            // if (oneTeacher_Register == null) {
+            //     for (var i = 0; i < requestStudents.length; i++) {
+            //         let newRegister = await Register.create({
+            //             Teacher_Email: req.body.teacher,
+            //             Student_Email: requestStudents[i]
+            //         });
+            //     }
+            // } else {
+            //     for (var i = 0; i < requestStudents.length; i++) {
+            //         let newRegister = await Register.findOrCreate({
+            //             where: {
+            //                 Teacher_Email: req.body.teacher,
+            //                 Student_Email: requestStudents[i]
+            //             },
+            //             defaults: {
+            //                 Teacher_Email: req.body.teacher,
+            //                 Student_Email: requestStudents[i]
+            //             }
+            //         })
+            //     }
+            // }
 
             //done
             res.status(204).send({ message: "registered" })

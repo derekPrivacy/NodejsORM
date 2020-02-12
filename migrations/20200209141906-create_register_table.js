@@ -10,11 +10,11 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true
       },
-      TeacherEmail: {
+      Teacher_Email: {
         type: Sequelize.STRING(),
         allowNull: false,
       },
-      StudentEmail: {
+      Student_Email: {
         type: Sequelize.STRING(),
         allowNull: false,
       }

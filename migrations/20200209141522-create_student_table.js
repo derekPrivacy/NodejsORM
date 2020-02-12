@@ -10,12 +10,12 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true
       },
-      StudentEmail: {
+      Student_Email: {
         type: Sequelize.STRING(),
         allowNull: false,
         unique: true
       },
-      SuspensionFlag: {
+      Suspension_Flag: {
         type: Sequelize.INTEGER(),
         allowNull: false,
         unique: false

@@ -25,26 +25,26 @@ router.post("/retrievefornotifications", [
             var registeredStudents = [];
 
             console.log(req.body.teacher)
-            var foundStudents = await Register.findAll({ where: { TeacherEmail: req.body.teacher }, raw: true, attributes: ['StudentEmail'] }).catch(function (err) {
+            var foundStudents = await Register.findAll({ where: { Teacher_Email: req.body.teacher }, raw: true, attributes: ['Student_Email'] }).catch(function (err) {
                 console.log(err)
             });
 
             for (var i = 0; i < foundStudents.length; i++) {
-                registeredStudents.push(foundStudents[i].StudentEmail)
+                registeredStudents.push(foundStudents[i].Student_Email)
             }
 
-            //extract all the student email from notification text And make sure it's valid student email And SuspensionFlag!=1
+            //extract all the student email from notification text And make sure it's valid student email And Suspension_Flag!=1
             var notificationEmail = req.body.notification.match(emailRegex())
 
             var notifiedStudents = [];
 
             for (var i = 0; notificationEmail != null && i < notificationEmail.length; i++) {
 
-                var oneStudent = await Student.findOne({ where: { StudentEmail: notificationEmail[i] }, raw: true }).catch(function (err) {
+                var oneStudent = await Student.findOne({ where: { Student_Email: notificationEmail[i] }, raw: true }).catch(function (err) {
                 });
 
-                if (oneStudent != null && oneStudent.SuspensionFlag != 1) {
-                    notifiedStudents.push(oneStudent.StudentEmail)
+                if (oneStudent != null && oneStudent.Suspension_Flag != 1) {
+                    notifiedStudents.push(oneStudent.Student_Email)
                 }
             }
 

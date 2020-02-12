@@ -15,7 +15,6 @@ describe('Suspend a specified student', () => {
                 "student": "testStudent1@gmail.com"
             })
             .then(function (res) {
-                console.log("hehe" + JSON.stringify(res.body))
                 res.should.have.status(204);
             })
     })

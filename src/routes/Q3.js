@@ -24,14 +24,14 @@ router.post("/suspend", [
 
             let rows = await Register.destroy({
                 where: {
-                    StudentEmail: req.body.student
+                    Student_Email: req.body.student
                 }
             })
 
             //add a suspension flag 1 to the student table
             let update = await Student.update(
-                { SuspensionFlag: 1 },
-                { where: { StudentEmail: req.body.student } }
+                { Suspension_Flag: 1 },
+                { where: { Student_Email: req.body.student } }
             )
 
             //done

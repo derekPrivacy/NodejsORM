@@ -17,7 +17,6 @@ describe('Register teacher and one or more students', () => {
                 "students": ["testStudent1@gmail.com", "testStudent2@gmail.com"]
             })
             .then(function (res) {
-                console.log("hehe" + JSON.stringify(res))
                 res.should.have.status(204);
             })
     })

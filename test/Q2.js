@@ -14,7 +14,6 @@ describe('Retrieve a list of students common to a given list of teachers', () =>
             .get('/api/commonstudents')
             .query({ teacher: 'goodTeacher@gmail.com', teacher: 'badTeacher@gmail.com' })
             .then(function (res) {
-                console.log("hehe" + JSON.stringify(res.body))
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('students');
