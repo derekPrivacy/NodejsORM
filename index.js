@@ -32,7 +32,6 @@ app.listen(port, hostname, () => {
 });
 
 require('./src/connection')
-// require('./src/bootstrap')()
 
 
 const Q1Router = require("./src/routes/Q1");

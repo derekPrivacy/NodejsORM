@@ -14,7 +14,7 @@
 
 6. visit http://localhost/phpmyadmin/ to verify Xampp service are working
 
-7. manually create a new database named `nodejsSequelize` use GUI interface inside http://localhost/phpmyadmin/
+7. manually create a new database named `nodejs_test` use GUI interface inside http://localhost/phpmyadmin/
 
 8. the database ORM is Sequelize
 
