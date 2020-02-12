@@ -19,28 +19,37 @@ router.post("/suspend", [
     if (errors.isEmpty()) {
         try {
 
-            //take that student record out from register table 
-            console.log(req.body.student)
+            //check if student record exist in student table
+            var oneStudent = await Student.findOne({ where: { Student_Email: req.body.student }, raw: true }).catch(function (err) {
+            });
 
-            let rows = await Register.destroy({
-                where: {
-                    Student_Email: req.body.student
-                }
-            })
+            if (oneStudent != null) {
 
-            //add a suspension flag 1 to the student table
-            let update = await Student.update(
-                { Suspension_Flag: 1 },
-                { where: { Student_Email: req.body.student } }
-            )
+                //take that student record out from register table 
+                console.log(req.body.student)
 
-            //done
-            res.status(204).send({ message: "suspended" })
+                let rows = await Register.destroy({
+                    where: {
+                        Student_Email: req.body.student
+                    }
+                })
 
+                //add a suspension flag 1 to the student table
+                let update = await Student.update(
+                    { Suspension_Flag: 1 },
+                    { where: { Student_Email: req.body.student } }
+                )
+
+                //done
+                res.status(204).send({ message: "suspended" })
+            }
+            else {
+                res.status(404).send({ errors: `student ${req.body.student} record not found` })
+            }
         }
         catch (err) {
             console.log(err)
-            res.status(500).send({ error: err.message })
+            res.status(500).send({ errors: err.message })
         }
     } else {
         return res.status(422).json({ errors: errors.array() })

@@ -66,7 +66,7 @@ router.get("/commonstudents",
             }
             catch (err) {
                 console.log(err)
-                res.status(500).send({ error: err.message })
+                res.status(500).send({ errors: err.message })
             }
         }
         else {

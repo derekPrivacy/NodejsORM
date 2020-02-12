@@ -74,39 +74,13 @@ router.post("/register", [
                 })
             }
 
-            // var oneTeacher_Register = await Register.findOne({ where: { Teacher_Email: req.body.teacher } }).catch(function (err) {
-            //     console.log(err)
-            // });
-
-            // if (oneTeacher_Register == null) {
-            //     for (var i = 0; i < requestStudents.length; i++) {
-            //         let newRegister = await Register.create({
-            //             Teacher_Email: req.body.teacher,
-            //             Student_Email: requestStudents[i]
-            //         });
-            //     }
-            // } else {
-            //     for (var i = 0; i < requestStudents.length; i++) {
-            //         let newRegister = await Register.findOrCreate({
-            //             where: {
-            //                 Teacher_Email: req.body.teacher,
-            //                 Student_Email: requestStudents[i]
-            //             },
-            //             defaults: {
-            //                 Teacher_Email: req.body.teacher,
-            //                 Student_Email: requestStudents[i]
-            //             }
-            //         })
-            //     }
-            // }
-
             //done
             res.status(204).send({ message: "registered" })
 
         }
         catch (err) {
             console.log(err)
-            res.status(500).send({ error: err.message })
+            res.status(500).send({ errors: err.message })
         }
     } else {
         return res.status(422).json({ errors: errors.array() })

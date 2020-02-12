@@ -61,7 +61,7 @@ router.post("/retrievefornotifications", [
         }
         catch (err) {
             console.log(err)
-            res.status(500).send({ error: err.message })
+            res.status(500).send({ errors: err.message })
         }
     } else {
         return res.status(422).json({ errors: errors.array() })
